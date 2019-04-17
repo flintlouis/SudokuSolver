@@ -32,16 +32,6 @@ static int	check_ver(char **sud, int j, int i, char n)
 	return (1);
 }
 
-static int	get_starter_sqr(int x)
-{
-	if (x % 3 == 0)
-		return (x);
-	else if (x % 3 == 1)
-		return (x - 1);
-	else
-		return (x - 2);
-}
-
 static int	check_sqr(char **sud, int j, int i, char n)
 {
 	int y;
@@ -49,8 +39,8 @@ static int	check_sqr(char **sud, int j, int i, char n)
 	int xmax;
 	int ymax;
 
-	y = get_starter_sqr(j);
-	x = get_starter_sqr(i);
+	y = j - (j % 3);
+	x = i - (i % 3);
 	xmax = x + 3;
 	ymax = y + 3;
 	while (y < ymax)
