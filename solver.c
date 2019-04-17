@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/15 18:31:14 by fhignett       #+#    #+#                */
-/*   Updated: 2019/04/16 18:58:31 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/04/16 19:29:06 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,50 @@ static void get_index(int *j, int *i)
 	}
 }
 
+static void go_back_index(int *j, int *i)
+{
+	if (*i == 0)
+	{
+		*i = 8;
+		*j -= 1;
+	}
+	else
+		*i -= 1;
+}
+
+static void backtracking(char **sud)
+{
+	system("clear");
+	print_sudoku(sud);
+}
+
 int	solver(char **sud, int j, int i)
 {
-	char n = '0';
-	int check = 0;
-	
+	char nbr = '1';
+
 	if (j == 9)
 		return (1);
+	backtracking(sud); /* <------- to show the backtracking */
 	if (ft_isdigit(sud[j][i]))
 	{
 		get_index(&j, &i);
-		solver(sud, j, i);
+		return (solver(sud, j, i));
 	}
-	while (!check)
+	while (nbr <= '9')
 	{
-		n++;
-		if (n > '9')
-			return (0);
-		sud[j][i] = n;
-		if ((check = checker(sud, j, i)))
+		if (checker(sud, j, i, nbr))
 		{
+			sud[j][i] = nbr;
 			get_index(&j, &i);
-			if (!solver(sud, j, i))
-				continue ;
+			if (solver(sud, j, i))
+				return (1);
+			else
+			{
+				go_back_index(&j, &i);
+				sud[j][i] = '.';
+			}
 		}
+		nbr += 1;
 	}
-	return (1);
+	return (0);
 }

@@ -12,21 +12,21 @@
 
 #include "sudoku.h"
 
-static int	check_hor(char **sud, int j, int i)
+static int	check_hor(char **sud, int j, int i, char n)
 {	
 	for (int x = 0; x < 9; x++)
 	{
-		if (x != i && sud[j][x] == sud[j][i])
+		if (x != i && sud[j][x] == n)
 			return (0);
 	}
 	return (1);
 }
 
-static int	check_ver(char **sud, int j, int i)
+static int	check_ver(char **sud, int j, int i, char n)
 {
 	for (int y = 0; y < 9; y++)
 	{
-		if (y != j && sud[y][i] == sud[j][i])
+		if (y != j && sud[y][i] == n)
 			return (0);
 	}
 	return (1);
@@ -42,7 +42,7 @@ static int	get_starter_sqr(int x)
 		return (x - 2);
 }
 
-static int	check_sqr(char **sud, int j, int i)
+static int	check_sqr(char **sud, int j, int i, char n)
 {
 	int y;
 	int x;
@@ -57,7 +57,7 @@ static int	check_sqr(char **sud, int j, int i)
 	{
 		while (x < xmax)
 		{
-			if ((i != x || j != y) && sud[y][x] == sud[j][i])
+			if ((i != x || j != y) && sud[y][x] == n)
 				return (0);
 			x++;
 		}
@@ -67,13 +67,13 @@ static int	check_sqr(char **sud, int j, int i)
 	return (1);
 }
 
-int		checker(char **sud, int j, int i)
+int		checker(char **sud, int j, int i, char n)
 {
-	if (!check_hor(sud, j, i))
+	if (!check_hor(sud, j, i, n))
 		return (0);
-	if (!check_ver(sud, j, i))
+	if (!check_ver(sud, j, i, n))
 		return (0);
-	if (!check_sqr(sud, j, i))
+	if (!check_sqr(sud, j, i, n))
 		return (0);
 	return (1);
 }

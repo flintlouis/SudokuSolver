@@ -33,10 +33,30 @@ static char **get_sudoku(char *file)
 	return (sud);
 }
 
-static void print_sudoku(char **sud)
+void print_sudoku(char **sud)
 {
-	for (int d = 0; d < 9; d++)
-		ft_putendl(sud[d]);
+	int i = 0;
+	int j = 0;
+	while (j < 9)
+	{
+		ft_putchar(' ');
+		while (i < 11)
+		{
+			ft_putchar(sud[j][i]);
+			ft_putchar(' ');
+			if (i == 2 || i == 5)
+			{
+				ft_putchar('|');
+				ft_putchar(' ');
+			}
+			i++;
+		}
+		ft_putchar('\n');
+		i = 0;
+		if (j == 2 || j == 5)
+			ft_putendl(" ------+-------+------");
+		j++;
+	}
 }
 
 static void solve_sudoku(char *file)
@@ -44,8 +64,14 @@ static void solve_sudoku(char *file)
 	char **sud;
 
 	sud = get_sudoku(file);
-	if (solver(sud, 0, 0) == 1)
+	system("clear");
+	print_sudoku(sud);
+	getchar();
+	if (solver(sud, 0, 0))
+	{
+		system("clear");
 		print_sudoku(sud);
+	}
 	else
 		ft_putendl("Invalid Sudoku...");
 }
