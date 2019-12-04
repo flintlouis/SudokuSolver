@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/15 18:31:14 by fhignett       #+#    #+#                */
-/*   Updated: 2019/04/16 19:29:06 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/12/04 14:50:09 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void backtracking(char **sud)
 {
 	system("clear");
 	print_sudoku(sud);
+	// sleep(1);
 }
 
 int	solver(char **sud, int j, int i)
@@ -46,12 +47,12 @@ int	solver(char **sud, int j, int i)
 
 	if (j == 9)
 		return (1);
-	backtracking(sud); /* <------- to show the backtracking */
 	if (ft_isdigit(sud[j][i]))
 	{
 		get_index(&j, &i);
 		return (solver(sud, j, i));
 	}
+	backtracking(sud); /* <------- to show the backtracking */
 	while (nbr <= '9')
 	{
 		if (checker(sud, j, i, nbr))
