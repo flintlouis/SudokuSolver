@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/04/13 16:05:02 by fhignett       #+#    #+#                */
-/*   Updated: 2019/06/20 17:29:46 by fhignett      ########   odam.nl         */
+/*   Created: 2019/04/13 16:05:02 by fhignett      #+#    #+#                 */
+/*   Updated: 2020/10/07 14:21:58 by flintlouis    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void print_sudoku(char **sud)
 	}
 }
 
-static void solve_sudoku(char *file)
+static void solve_sudoku(char *file, int bt)
 {
 	char **sud;
 
@@ -67,7 +67,7 @@ static void solve_sudoku(char *file)
 	system("clear");
 	print_sudoku(sud);
 	getchar();
-	if (solver(sud, 0, 0))
+	if (solver(sud, 0, 0, bt))
 	{
 		system("clear");
 		print_sudoku(sud);
@@ -78,9 +78,17 @@ static void solve_sudoku(char *file)
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
+	int bt;
+
+	bt = 0;
+	if (argc < 2 || argc > 3)
 		return (1);
-	else
-		solve_sudoku(argv[1]);
+	if (argc == 3)
+	{
+		if (!ft_strequ(argv[2], "--backtracking"))
+			return (1);
+		bt = 1;
+	}	
+	solve_sudoku(argv[1], bt);
 	return (0);
 }

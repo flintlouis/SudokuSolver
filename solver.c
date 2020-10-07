@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/04/15 18:31:14 by fhignett       #+#    #+#                */
-/*   Updated: 2019/12/04 14:50:09 by fhignett      ########   odam.nl         */
+/*   Created: 2019/04/15 18:31:14 by fhignett      #+#    #+#                 */
+/*   Updated: 2020/10/07 14:18:38 by flintlouis    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void backtracking(char **sud)
 	// sleep(1);
 }
 
-int	solver(char **sud, int j, int i)
+int	solver(char **sud, int j, int i, int bt)
 {
 	char nbr = '1';
 
@@ -50,16 +50,17 @@ int	solver(char **sud, int j, int i)
 	if (ft_isdigit(sud[j][i]))
 	{
 		get_index(&j, &i);
-		return (solver(sud, j, i));
+		return (solver(sud, j, i, bt));
 	}
-	backtracking(sud); /* <------- to show the backtracking */
+	if (bt)
+		backtracking(sud); /* <------- to show the backtracking */
 	while (nbr <= '9')
 	{
 		if (checker(sud, j, i, nbr))
 		{
 			sud[j][i] = nbr;
 			get_index(&j, &i);
-			if (solver(sud, j, i))
+			if (solver(sud, j, i, bt))
 				return (1);
 			else
 			{
